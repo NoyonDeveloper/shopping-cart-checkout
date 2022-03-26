@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <h2>My shopping cart</h2>
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button onclick="handelProductChange('phone', false)" class="btn btn-default"><i
+                                 class="fas fa-minus"></i></button>
+                           <input id="phone-count" type="number" min="0" class="form-control text-center" value="1">
+                           <button onclick="handelProductChange('phone', true)" class="btn btn-default"><i
+                                 class="fas fa-plus"></i></button>
+                        </div>
+                        <h5 id="phone-total">$1219</h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button onclick="handelProductChange('case', false);" class="btn btn-default"><i
+                                 class="fas fa-minus"></i></button>
+                           <input id="case-count" type="number" min="0" class="form-control text-center" value="1">
+                           <button onclick="handelProductChange('case', true);" class="btn btn-default"><i
+                                 class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5 id="case-total">$59</h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5 id="totalPriceProduct">$1,278</h5>
+                        <h5 id="tax">$0</h5>
+                        <h5 id="grandTotal">$1,278</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+
+   <script>
+      function handelProductChange(product, isincrese) {
+         const productInput = document.getElementById(product + '-count');
+         const productCountNumber = parseInt(productInput.value);
+         let productNewNumber = productCountNumber;
+         if (isincrese == true) {
+            productNewNumber = productCountNumber + 1;
+         }
+         if (isincrese == false && productCountNumber > 0) {
+            productNewNumber = productCountNumber - 1;
+         }
+         productInput.value = productNewNumber;
+         let productTotal = 0;
+         if (product == 'phone') {
+            productTotal = productNewNumber * 1219;
+         }
+         if (product == 'case') {
+            productTotal = productNewNumber * 59;
+         }
+         document.getElementById(product + '-total').innerText = '$' + productTotal;
+         calculatorTotla();
+      }
+      
+      function calculatorTotla(){
+         const phoneInput = document.getElementById('phone-count');
+         const phoneCount = parseInt(phoneInput.value);
+
+         const caseInput = document.getElementById('case-count');
+         const caseCount = parseInt(caseInput.value);
+
+         const totalCount = phoneCount * 1219 + caseCount * 59;
+         document.getElementById('totalPriceProduct').innerText = '$' + totalCount;
+
+         const tax = Math.round(totalCount * 0.1);
+         document.getElementById('tax').innerText = '$' + tax;
+
+         const grandTotal = totalCount + tax;
+         document.getElementById('grandTotal').innerText = '$' + grandTotal;
+      }
+      /**
+             * Phone Event Button Hanlder
+             */
+      // document.getElementById('phone-increse').addEventListener('click', function(){
+      //     handerProductChange(true);
+      // })
+      // document.getElementById('phone-decrese').addEventListener('click', function(){
+      //     handerProductChange(false)
+      // })
+            /**
+             * Phone Function
+             */
+
+      // function handerProductChange(isincrese) {
+      //     const phoneInput = document.getElementById('phone-count');
+      //     const phoneCountNumber = parseInt(phoneInput.value);
+      //     // const phoneNewNumber = phoneCountNumber + 1;
+      //     let phoneNewNumber = phoneCountNumber;
+      //     if(isincrese == true){
+      //         phoneNewNumber = phoneCountNumber + 1;
+      //     }
+      //     if(isincrese == false && phoneCountNumber > 0){
+      //         phoneNewNumber = phoneCountNumber - 1;
+      //     }
+      //     phoneInput.value = phoneNewNumber;
+      //     const totalPrice = phoneNewNumber * 1219;
+      //     document.getElementById('phoneTotal').innerText = '$' + totalPrice;
+      // }
+
+            /**
+             * Case Event Button Handler
+             */
+      // document.getElementById('case-increse').addEventListener('click', function(){
+      //     handerCseChange(true);
+      // })
+      // document.getElementById('case-decrese').addEventListener('click', function(){
+      //     handerCseChange(false);
+      // })
+            /**
+             * Case Function
+             */
+      // function handerCseChange(isincrese) {
+      //     const phoneInput = document.getElementById('case-count');
+      //     const phoneCountNumber = parseInt(phoneInput.value);
+      //     // const phoneNewNumber = phoneCountNumber + 1;
+      //     let phoneNewNumber = phoneCountNumber;
+      //     if(isincrese == true){
+      //         phoneNewNumber = phoneCountNumber + 1;
+      //     }
+      //     if(isincrese == false && phoneCountNumber > 0){
+      //         phoneNewNumber = phoneCountNumber - 1;
+      //     }
+      //     phoneInput.value = phoneNewNumber;
+      //     const totalPrice = phoneNewNumber * 59;
+      //     document.getElementById('caseTotal').innerText = '$' + totalPrice;
+      // }
+            /**
+             * Phone DOM Event Handler
+             */
+      // document.getElementById('phone-increse').addEventListener('click', function(){
+      //     const phoneInput = document.getElementById('phone-count');
+      //     const phoneCountNumber = parseInt(phoneInput.value);
+      //     const phoneNewNumber = phoneCountNumber + 1;
+      //     phoneInput.value = phoneNewNumber;
+      //     const totalPrice = phoneNewNumber * 1219;
+      //     document.getElementById('phoneTotal').innerText = '$' + totalPrice;
+      // })
+      // document.getElementById('phone-decrese').addEventListener('click', function(){
+      //     const phoneInput = document.getElementById('phone-count');
+      //     const phoneCountNumber = parseInt(phoneInput.value);
+      //     const phoneNewNumber = phoneCountNumber - 1;
+      //     phoneInput.value = phoneNewNumber;
+      //     const totalPrice = phoneNewNumber * 1219;
+      //     document.getElementById('phoneTotal').innerText = '$' + totalPrice;
+      // })
+            /**
+             * Case DOM Event Handler
+             */
+      //  document.getElementById('case-increse').addEventListener('click', function(){
+      //     const phoneInput = document.getElementById('case-count');
+      //     const phoneCountNumber = parseInt(phoneInput.value);
+      //     const phoneNewNumber = phoneCountNumber + 1;
+      //     phoneInput.value = phoneNewNumber;
+      //     const totalPrice = phoneNewNumber * 59;
+      //     document.getElementById('caseTotal').innerText = '$' + totalPrice;
+      // })
+      // document.getElementById('case-decrese').addEventListener('click', function(){
+      //     const phoneInput = document.getElementById('case-count');
+      //     const phoneCountNumber = parseInt(phoneInput.value);
+      //     const phoneNewNumber = phoneCountNumber - 1;
+      //     phoneInput.value = phoneNewNumber;
+      //     const totalPrice = phoneNewNumber * 59;
+      //     document.getElementById('caseTotal').innerText = '$' + totalPrice;
+      // })
+   </script>
+</body>
+
+</html>
